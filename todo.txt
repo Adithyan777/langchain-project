@@ -1,0 +1,7 @@
+Issue: Not able to know whether the build was succesfull or not 
+       since the agent exits immediately after the docker build command since input is greater than token limit.
+Solution: A function to call after build process which uses "echo $?" to know if the build was succesfull.
+
+Issue: Need to check if the container from the image runs and have all the required dependencies.
+Solution: need to figure out.
+
