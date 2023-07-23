@@ -33,8 +33,9 @@ agent = initialize_agent(
     llm=llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True,
-    handle_parsing_error =True 
-    )
+    handle_parsing_errors=True,
+    handle_tool_error=True,
+)
 
 # Creating a prompt_template.
 template = """
@@ -49,9 +50,11 @@ DO NOT GIVE THE DOCKERFILE CONTENTS JUST GIVE THE PROMPT.
 
 # details = input("Please provide the details of the dockerfile: ")
 details = '''
-I want a Dockerfile for a Node.js application.
-It should use Node.js version 14 and require the following dependencies: Express, MongoDB driver, and dotenv.
-Please use the official Node.js base image.
+I need a Dockerfile for my Node.js application. 
+It requires Node.js version 12, npm, and the Express framework. 
+The base image should be the latest Node.js Alpine image. 
+Additionally, I would like to include the following environment variables: PORT=3000, NODE_ENV=production. 
+Lastly, please expose port 3000 in the Dockerfile.
 '''
 
 prompt_template = PromptTemplate.from_template(template=template)
