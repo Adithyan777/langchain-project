@@ -12,6 +12,7 @@ from langchain.prompts import PromptTemplate
 from langchain.tools import ShellTool
 from langchain.tools import Tool
 from langchain.chains import LLMChain
+from langchain.callbacks import get_openai_callback
 
 # Init the LLM which powers the agent.
 llm = ChatOpenAI(temperature=0,model='gpt-3.5-turbo')
@@ -78,4 +79,9 @@ FINAL_PROMPT = prompt+template2
 #print(prompt)
 #print(agent.agent.llm_chain.prompt.template)
 
-agent.run(FINAL_PROMPT)
+with get_openai_callback() as cb:
+    response = agent.run(FINAL_PROMPT)
+    print(f"Total Tokens: {cb.total_tokens}")
+    print(f"Prompt Tokens: {cb.prompt_tokens}")
+    print(f"Completion Tokens: {cb.completion_tokens}")
+    print(f"Total Cost (USD): ${cb.total_cost}")
